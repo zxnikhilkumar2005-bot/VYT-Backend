@@ -2,6 +2,7 @@ const userModel = require ('../model/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+
 async function registerUser (req,res){
     const jwtSecret = process.env.JWT_SECRET || process.env.JWT_secret;
     const {username,email,password,role} = req.body;
@@ -57,9 +58,6 @@ async function registerUser (req,res){
     })
 
 }   
-
-
-
 
 async function loginUser(req,res){
     const jwtSecret = process.env.JWT_SECRET || process.env.JWT_secret;
@@ -117,6 +115,13 @@ async function loginUser(req,res){
 
 }
 
+async function logoutUser(req,res){
+    res.clearCookie('token');
+    res.status(200).json({
+        message:"User logged out successfully"
+    })
+}
+
 module.exports={
-    registerUser,loginUser
+    registerUser,loginUser,logoutUser,
 }
